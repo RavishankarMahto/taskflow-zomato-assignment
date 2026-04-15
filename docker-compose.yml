@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-taskflow}
+      POSTGRES_USER: ${POSTGRES_USER:-taskflow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-taskflow_password}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-taskflow} -d ${POSTGRES_DB:-taskflow}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-taskflow}
+      POSTGRES_USER: ${POSTGRES_USER:-taskflow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-taskflow_password}
+      # node-pg-migrate understands PG* vars
+      PGHOST: ${POSTGRES_HOST:-postgres}
+      PGPORT: ${POSTGRES_PORT:-5432}
+      PGDATABASE: ${POSTGRES_DB:-taskflow}
+      PGUSER: ${POSTGRES_USER:-taskflow}
+      PGPASSWORD: ${POSTGRES_PASSWORD:-taskflow_password}
+      JWT_SECRET: ${JWT_SECRET:-change_me_in_production}
+      JWT_EXPIRES_HOURS: ${JWT_EXPIRES_HOURS:-24}
+      BCRYPT_COST: ${BCRYPT_COST:-12}
+      PORT: ${BACKEND_PORT:-8000}
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+    environment:
+      # runtime (nginx) is static; kept for clarity
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+

@@ -1,0 +1,128 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0b0c10;
+  --panel: #10121a;
+  --muted: #a5adbc;
+  --text: #e5e9f0;
+  --border: rgba(255, 255, 255, 0.1);
+  --accent: #e23744; /* Zomato-ish red */
+  --accent-2: #7c3aed;
+
+  font-family: system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: radial-gradient(1200px 600px at 20% -10%, rgba(124, 58, 237, 0.25), transparent 60%),
+    radial-gradient(1200px 600px at 80% -10%, rgba(226, 55, 68, 0.25), transparent 60%),
+    var(--bg);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: min(1100px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.card {
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-color: transparent;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.input, .select, .textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--text);
+  outline: none;
+}
+
+.textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 700px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  background: rgba(11, 12, 16, 0.55);
+  border-bottom: 1px solid var(--border);
+}
+
+.navInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+}
+
+.brand {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+}
