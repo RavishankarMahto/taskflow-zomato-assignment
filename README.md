@@ -14,6 +14,20 @@ TaskFlow enables users to:
 - 🔎 Filter tasks by status and assignee
 - ⚡ Experience optimistic UI updates for fast status changes
 
+## 🎬 Demo (Screenshots)
+
+| Login | Register |
+|---|---|
+| ![Login](docs/screenshots/01-login.png) | ![Register](docs/screenshots/02-register.png) |
+
+| Projects | Project detail |
+|---|---|
+| ![Projects](docs/screenshots/03-projects.png) | ![Project detail](docs/screenshots/04-project-detail.png) |
+
+| Create task modal |
+|---|
+| ![Create task](docs/screenshots/05-create-task.png) |
+
 ## 🏗️ Tech Stack
 
 ### Backend
